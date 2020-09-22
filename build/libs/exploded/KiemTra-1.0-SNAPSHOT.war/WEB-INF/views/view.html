@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout :: head"></head>
+<body>
+<h3>View User</h3>
+<p>
+    <a th:href="@{/user}">
+        Back to user list
+    </a>
+</p>
+<div id="detail">
+    <div class="cusdetail">
+        <label>UserName:</label>
+        <label th:text="${user.getUsername()}"></label>
+    </div>
+    <div class="cusdetail">
+        <label>Address:</label>
+        <label th:text="${user.getAddress()}"></label>
+    </div>
+    <div class="cusdetail">
+        <label>Category:</label>
+        <label th:text="${user.category.name}"></label>
+    </div>
+</div>
+</form>
+<footer th:replace="/layout :: footer"></footer>
+</body>
+</html>
