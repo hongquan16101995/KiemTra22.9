@@ -1,6 +1,5 @@
 package service.impl;
 
-import model.Category;
 import model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -30,10 +29,5 @@ public class UserServiceImpl implements UserService {
     @Override
     public void remove(Long id) {
         userRepository.delete(id);
-    }
-
-    @Override
-    public Page<User> findAllByProvince(Category category, Pageable pageable) {
-        return userRepository.findAllByCategory(category, pageable);
     }
 }

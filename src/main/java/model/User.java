@@ -1,5 +1,7 @@
 package model;
 
+import org.springframework.stereotype.Component;
+
 import javax.persistence.*;
 
 @Entity
@@ -10,6 +12,7 @@ public class User {
     private Long id;
     private String username;
     private String address;
+    private String phone;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
@@ -18,9 +21,10 @@ public class User {
     public User() {
     }
 
-    public User(String username, String address) {
+    public User(String username, String address, String phone) {
         this.username = username;
         this.address = address;
+        this.phone = phone;
     }
 
     public Long getId() {
@@ -45,6 +49,14 @@ public class User {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public Category getCategory() {

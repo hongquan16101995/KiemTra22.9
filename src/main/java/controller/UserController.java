@@ -38,7 +38,7 @@ public class UserController {
     }
 
     @GetMapping("/create-user")
-    public ModelAndView createUser(){
+    public ModelAndView createUser() {
         ModelAndView modelAndView = new ModelAndView("/create");
         User user = new User();
         modelAndView.addObject("user", user);
@@ -46,27 +46,28 @@ public class UserController {
     }
 
     @PostMapping("/create-user")
-    public ModelAndView saveUser(@ModelAttribute("user") User user, @SortDefault (sort = {"username"}) @PageableDefault(value = 5) Pageable pageable){
+    public ModelAndView saveUser(@ModelAttribute("user") User user, @SortDefault(sort = {"username"}) @PageableDefault(value = 5) Pageable pageable) {
         userService.save(user);
         ModelAndView modelAndView = new ModelAndView("/list");
         Page<User> users = userService.findAll(pageable);
         modelAndView.addObject("users", users);
         modelAndView.addObject("message", "New user created successfully");
         return modelAndView;
+
     }
 
     @GetMapping("/edit-user/{id}")
-    public ModelAndView editUser(@PathVariable long id){
+    public ModelAndView editUser(@PathVariable long id) {
         User user = userService.findById(id);
-        if(user != null) {
+        if (user != null) {
             return new ModelAndView("/edit", "user", user);
-        }else {
+        } else {
             return new ModelAndView("/error.404");
         }
     }
 
     @PostMapping("/edit-user/{id}")
-    public ModelAndView updateUser(@ModelAttribute("user") User user, @SortDefault (sort = {"username"}) @PageableDefault(value = 10) Pageable pageable){
+    public ModelAndView updateUser(@ModelAttribute("user") User user, @SortDefault(sort = {"username"}) @PageableDefault(value = 10) Pageable pageable) {
         userService.save(user);
         ModelAndView modelAndView = new ModelAndView("/list");
         Page<User> users = userService.findAll(pageable);
@@ -76,17 +77,17 @@ public class UserController {
     }
 
     @GetMapping("/delete-user/{id}")
-    public ModelAndView deleteUser(@PathVariable long id){
+    public ModelAndView deleteUser(@PathVariable long id) {
         User user = userService.findById(id);
-        if(user != null) {
+        if (user != null) {
             return new ModelAndView("/delete", "user", user);
-        }else {
+        } else {
             return new ModelAndView("/error.404");
         }
     }
 
     @PostMapping("/delete-user/{id}")
-    public ModelAndView removeUser(@ModelAttribute("user") User user, @SortDefault (sort = {"username"}) @PageableDefault(value = 10) Pageable pageable ){
+    public ModelAndView removeUser(@ModelAttribute("user") User user, @SortDefault(sort = {"username"}) @PageableDefault(value = 10) Pageable pageable) {
         userService.remove(user.getId());
         ModelAndView modelAndView = new ModelAndView("/list");
         Page<User> users = userService.findAll(pageable);
@@ -96,11 +97,11 @@ public class UserController {
     }
 
     @GetMapping("/view-user/{id}")
-    public ModelAndView showUser(@PathVariable long id){
+    public ModelAndView showUser(@PathVariable long id) {
         User user = userService.findById(id);
-        if(user != null) {
+        if (user != null) {
             return new ModelAndView("/view", "user", user);
-        }else {
+        } else {
             return new ModelAndView("/error.404");
         }
     }

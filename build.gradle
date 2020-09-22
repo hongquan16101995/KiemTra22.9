@@ -35,4 +35,8 @@ dependencies {
 
 //lỗi antifacts
     compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+
+//validation
+    compile group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
+    compile group: 'org.hibernate', name: 'hibernate-validator', version: '6.0.10.Final'
 }
