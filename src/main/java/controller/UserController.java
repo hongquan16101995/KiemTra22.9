@@ -8,6 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -46,14 +48,19 @@ public class UserController {
     }
 
     @PostMapping("/create-user")
-    public ModelAndView saveUser(@ModelAttribute("user") User user, @SortDefault(sort = {"username"}) @PageableDefault(value = 5) Pageable pageable) {
+    public ModelAndView saveUser(@Validated @ModelAttribute("user") User user, BindingResult bindingResult,
+                                 @SortDefault(sort = {"username"}) @PageableDefault(value = 5) Pageable pageable) {
+        if(bindingResult.hasFieldErrors()){
+            ModelAndView modelAndView = new ModelAndView("/create");
+            modelAndView.addObject("users", user);
+            return modelAndView;
+        }
         userService.save(user);
         ModelAndView modelAndView = new ModelAndView("/list");
         Page<User> users = userService.findAll(pageable);
         modelAndView.addObject("users", users);
         modelAndView.addObject("message", "New user created successfully");
         return modelAndView;
-
     }
 
     @GetMapping("/edit-user/{id}")
@@ -67,7 +74,13 @@ public class UserController {
     }
 
     @PostMapping("/edit-user/{id}")
-    public ModelAndView updateUser(@ModelAttribute("user") User user, @SortDefault(sort = {"username"}) @PageableDefault(value = 10) Pageable pageable) {
+    public ModelAndView updateUser(@Validated @ModelAttribute("user") User user, BindingResult bindingResult,
+                                   @SortDefault(sort = {"username"}) @PageableDefault(value = 5) Pageable pageable) {
+        if(bindingResult.hasFieldErrors()){
+            ModelAndView modelAndView = new ModelAndView("/edit");
+            modelAndView.addObject("users", user);
+            return modelAndView;
+        }
         userService.save(user);
         ModelAndView modelAndView = new ModelAndView("/list");
         Page<User> users = userService.findAll(pageable);
@@ -87,7 +100,8 @@ public class UserController {
     }
 
     @PostMapping("/delete-user/{id}")
-    public ModelAndView removeUser(@ModelAttribute("user") User user, @SortDefault(sort = {"username"}) @PageableDefault(value = 10) Pageable pageable) {
+    public ModelAndView removeUser(@ModelAttribute("user") User user,
+                                   @SortDefault(sort = {"username"}) @PageableDefault(value = 5) Pageable pageable) {
         userService.remove(user.getId());
         ModelAndView modelAndView = new ModelAndView("/list");
         Page<User> users = userService.findAll(pageable);

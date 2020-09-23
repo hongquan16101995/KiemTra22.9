@@ -14,14 +14,17 @@
         <div>
             <label>UserName</label>
             <input type="text" th:field="*{username}"/>
+            <td th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></td>
         </div>
         <div>
             <label>Address</label>
             <input type="text" th:field="*{address}"/>
+            <td th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></td>
         </div>
         <div>
             <label>Phonenumber</label>
             <input type="text" th:field="*{phone}"/>
+            <td th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></td>
         </div>
         <div>
             <label>Category</label>

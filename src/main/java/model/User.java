@@ -1,8 +1,11 @@
 package model;
 
-import org.springframework.stereotype.Component;
+import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "user")
@@ -10,8 +13,17 @@ public class User {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
+
+    @NotNull
+    @Size(max = 50)
     private String username;
+
+    @NotNull
     private String address;
+
+    @NotNull
+    @Pattern(regexp="(^0$|[0-9]*$)")
+    @Range(min = 10,max = 11)
     private String phone;
 
     @ManyToOne

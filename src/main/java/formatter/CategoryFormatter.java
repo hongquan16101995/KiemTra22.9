@@ -6,12 +6,11 @@ import org.springframework.format.Formatter;
 import org.springframework.stereotype.Component;
 import service.CategoryService;
 
-import java.text.ParseException;
 import java.util.Locale;
 
 @Component
 public class CategoryFormatter implements Formatter<Category> {
-    private CategoryService categoryService;
+    private final CategoryService categoryService;
 
     @Autowired
     public CategoryFormatter(CategoryService categoryService) {
@@ -19,7 +18,7 @@ public class CategoryFormatter implements Formatter<Category> {
     }
 
     @Override
-    public Category parse(String text, Locale locale) throws ParseException {
+    public Category parse(String text, Locale locale) {
         return categoryService.findById(Long.parseLong(text));
     }
 
